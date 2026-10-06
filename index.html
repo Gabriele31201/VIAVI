@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <!-- Indichiamo UTF-8, così il browser interpreta correttamente accenti e caratteri italiani. -->
+  <meta charset="UTF-8">
+
+  <!-- Questa impostazione adatta la pagina alla larghezza del dispositivo, anche su smartphone. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Il titolo compare nella scheda del browser e aiuta a identificare la pagina. -->
+  <title>Accedi</title>
+
+  <!-- Colleghiamo il CSS esterno: così struttura e aspetto rimangono in file distinti. -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- defer carica JavaScript senza bloccare la pagina e lo esegue dopo aver letto l'HTML. -->
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- main contiene il contenuto principale; login-page si occupa di centrarlo sullo schermo. -->
+  <main class="login-page">
+    <!-- Queste forme sono soltanto decorative, quindi le nascondiamo alle tecnologie assistive. -->
+    <div class="opera-art" aria-hidden="true">
+      <span class="opera-ring opera-ring-one"></span>
+      <span class="opera-ring opera-ring-two"></span>
+      <span class="opera-ring opera-ring-three"></span>
+    </div>
+
+    <!-- section raccoglie tutti gli elementi della schermata di accesso in un unico riquadro. -->
+    <section class="login-card" aria-labelledby="login-title">
+      <!-- header presenta la pagina prima dei campi, seguendo un ordine facile da leggere. -->
+      <header class="login-header">
+        <!-- Questa piccola etichetta introduce il modulo senza togliere importanza al titolo. -->
+        <p class="eyebrow">BENVENUTO</p>
+
+        <!-- h1 è il titolo principale: ne usiamo uno solo per dare una gerarchia chiara. -->
+        <h1 id="login-title">Accedi al tuo account</h1>
+
+        <!-- Il sottotitolo spiega brevemente all'utente cosa deve fare. -->
+        <p class="subtitle">Inserisci i tuoi dati per continuare.</p>
+      </header>
+
+      <!-- form raccoglie i dati; per ora non esiste un server che possa verificare l'accesso. -->
+      <form class="login-form" action="#" method="post">
+        <!-- Ogni campo è dentro un div, così etichetta e input restano allineati. -->
+        <div class="form-field">
+          <!-- for e id collegano l'etichetta al campo anche quando si clicca sul testo. -->
+          <label for="email">Indirizzo email</label>
+
+          <!-- type=email permette al browser di controllare la forma dell'indirizzo. -->
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="nome@esempio.it"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <!-- Anche la password ha un contenitore proprio per mantenere coerente il modulo. -->
+        <div class="form-field">
+          <label for="password">Password</label>
+
+          <!-- type=password nasconde i caratteri; required impedisce l'invio del campo vuoto. -->
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Inserisci la password"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <!-- Questa riga raggruppa una scelta facoltativa e il link di recupero. -->
+        <div class="form-options">
+          <!-- La label contiene anche la checkbox, quindi il testo è facile da selezionare. -->
+          <label class="remember-option" for="remember">
+            <input id="remember" name="remember" type="checkbox">
+            <span>Ricordami</span>
+          </label>
+
+          <!-- Il link è un segnaposto: andrà collegato a una pagina di recupero reale. -->
+          <a class="text-link" href="#">Password dimenticata?</a>
+        </div>
+
+        <!-- type=submit indica che questo pulsante invia il modulo al browser. -->
+        <button class="submit-button" type="submit">Accedi</button>
+      </form>
+
+      <!-- In fondo offriamo un'alternativa a chi non ha ancora un account. -->
+      <p class="signup-prompt">
+        Non hai un account?
+        <!-- Anche questo collegamento è un segnaposto, in attesa della pagina di registrazione. -->
+        <a class="text-link" href="#">Registrati</a>
+      </p>
+    </section>
+
+    <!-- Il nome del sito completa la pagina e resta nella parte bassa dello schermo. -->
+    <p class="brand-name">VIAVI</p>
+  </main>
+</body>
+</html>

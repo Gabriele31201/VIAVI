@@ -1,0 +1,444 @@
+/* 1. COLORI DEL PROGETTO
+   Le variabili raccolgono i colori in un solo punto. In questo modo, per cambiare
+   il colore principale non dobbiamo cercarlo e modificarlo in tante regole diverse. */
+:root {
+  color-scheme: dark;
+  --color-background: #080b14;
+  --color-surface: rgba(22, 27, 43, 0.68);
+  --color-text: #f7f8ff;
+  --color-muted: #c0c5d6;
+  --color-border: rgba(255, 255, 255, 0.2);
+  --color-primary: #ff4055;
+  --color-primary-hover: #ff6070;
+  --color-focus: #ff9ca8;
+}
+
+/* 2. REGOLE DI BASE
+   Con border-box, padding e bordi sono compresi nella larghezza dichiarata:
+   così è più semplice prevedere quanto spazio occupa ogni elemento. */
+* {
+  box-sizing: border-box;
+}
+
+/* Il body definisce lo stile generale della pagina: colori, carattere e sfondo.
+   Le sfumature aggiungono luce al fondo scuro senza usare immagini esterne. */
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--color-text);
+  background:
+    radial-gradient(ellipse at 13% 20%, rgba(117, 20, 47, 0.34), transparent 36%),
+    radial-gradient(ellipse at 87% 78%, rgba(28, 41, 83, 0.48), transparent 42%),
+    var(--color-background);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+/* 3. IMPAGINAZIONE DELLA PAGINA
+   Grid centra la scheda in entrambe le direzioni. position: relative offre
+   alle decorazioni un riferimento per essere posizionate dietro la scheda. */
+.login-page {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 32px 20px;
+  place-items: center;
+  isolation: isolate;
+  grid-template-rows: 1fr auto 1fr;
+}
+
+/* Questo contenitore occupa tutta la pagina e raccoglie le curve decorative.
+   pointer-events: none fa sì che le forme non blocchino i clic sul modulo. */
+.opera-art {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* 4. LINEE CURVE ISPIRATE A OPERA
+   Gli span diventano anelli grazie al bordo e al raggio del 50%.
+   Un bordo più spesso rende le curve visibili anche sul fondo scuro. */
+.opera-ring {
+  position: absolute;
+  display: block;
+  border: 5px solid rgba(255, 49, 72, 0.58);
+  border-radius: 50%;
+  box-shadow: 0 0 32px rgba(255, 40, 65, 0.2);
+  transform: rotate(-28deg);
+}
+
+/* Il primo anello è grande e parzialmente fuori schermo: se ne vede solo la curva. */
+.opera-ring-one {
+  top: -48%;
+  left: -23%;
+  width: min(1080px, 115vw);
+  height: min(760px, 82vw);
+}
+
+/* Il secondo anello si sovrappone al primo, creando una linea parallela più discreta. */
+.opera-ring-two {
+  top: -36%;
+  left: -16%;
+  width: min(940px, 100vw);
+  height: min(630px, 68vw);
+  border-color: rgba(255, 49, 72, 0.32);
+  transform: rotate(-34deg);
+}
+
+/* Il terzo anello bilancia la composizione sul lato opposto dello schermo. */
+.opera-ring-three {
+  right: -30%;
+  bottom: -58%;
+  width: min(1100px, 118vw);
+  height: min(760px, 82vw);
+  border-color: rgba(255, 49, 72, 0.28);
+  transform: rotate(-24deg);
+}
+
+/* 5. SCHEDA CON EFFETTO SPECCHIO
+   Il fondo semitrasparente lascia filtrare lo sfondo e i riflessi interni
+   ricordano una superficie lucida. La sfocatura crea profondità senza un bordo. */
+.login-card {
+  grid-row: 2;
+  width: min(100%, 440px);
+  padding: 40px;
+  border: 0;
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      112deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.2) 25%,
+      rgba(255, 255, 255, 0.045) 28%,
+      transparent 36%
+    ),
+    radial-gradient(ellipse at 12% 0%, rgba(255, 255, 255, 0.15), transparent 36%),
+    radial-gradient(ellipse at 88% 100%, rgba(116, 142, 255, 0.09), transparent 38%),
+    rgba(16, 21, 37, 0.035);
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.44),
+    inset 0 2px 24px rgba(255, 255, 255, 0.16),
+    inset 0 -3px 28px rgba(125, 150, 255, 0.08);
+  -webkit-backdrop-filter: blur(10px) saturate(185%);
+  backdrop-filter: blur(10px) saturate(185%);
+}
+
+/* Il nome del sito resta in basso, con lettere spaziate e un colore sobrio ma leggibile. */
+.brand-name {
+  grid-row: 3;
+  align-self: end;
+  justify-self: center;
+  margin: 0 0 4px;
+  color: #c2b9c4;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+}
+
+/* 6. TITOLI E TESTI
+   L'intestazione è centrata e distanziata dai campi per introdurre il modulo. */
+.login-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* La scritta piccola usa il colore d'accento, mentre il titolo resta il più evidente. */
+.eyebrow {
+  margin: 0 0 8px;
+  color: #ff7b89;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+/* clamp ridimensiona il titolo con lo schermo, mantenendo un minimo e un massimo. */
+.login-header h1 {
+  margin: 0;
+  font-size: clamp(1.55rem, 5vw, 1.9rem);
+  line-height: 1.2;
+}
+
+/* Il testo secondario è meno brillante del titolo, ma resta leggibile sul fondo scuro. */
+.subtitle {
+  margin: 12px 0 0;
+  color: var(--color-muted);
+}
+
+/* 7. MODULO E CAMPI
+   Grid e gap distribuiscono i campi con una spaziatura uniforme. */
+.login-form {
+  display: grid;
+  gap: 20px;
+}
+
+/* Ogni campo dispone l'etichetta sopra la casella di inserimento. */
+.form-field {
+  display: grid;
+  gap: 8px;
+}
+
+/* Le etichette sono chiare e in grassetto, per non confondersi con i suggerimenti. */
+.form-field label {
+  color: #f4f5fb;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* I campi hanno un fondo scuro semitrasparente, in armonia con la scheda di vetro. */
+.form-field input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  color: var(--color-text);
+  background-color: rgba(7, 10, 20, 0.5);
+  font: inherit;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+/* Il placeholder suggerisce cosa scrivere, ma è meno evidente del testo digitato. */
+.form-field input::placeholder {
+  color: #aeb4c7;
+  opacity: 1;
+}
+
+/* :focus-visible mostra un contorno quando si usa la tastiera per navigare la pagina. */
+.form-field input:focus-visible {
+  border-color: #ff7b89;
+  outline: 3px solid rgba(255, 123, 137, 0.38);
+  outline-offset: 2px;
+}
+
+/* 8. OPZIONI, COLLEGAMENTI E PULSANTE
+   Flex dispone checkbox e link sulla stessa riga, lasciando spazio tra i due. */
+.form-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.875rem;
+}
+
+/* Inline-flex allinea checkbox e testo e permette di cliccare anche sulla scritta. */
+.remember-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+/* accent-color applica il colore del progetto alla checkbox selezionata. */
+.remember-option input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--color-primary);
+}
+
+/* Il rosa chiaro distingue i collegamenti dal testo normale e migliora il contrasto. */
+.text-link {
+  color: #ff9aa5;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* La sottolineatura al passaggio del mouse segnala che il testo è cliccabile. */
+.text-link:hover {
+  color: #ffc0c7;
+  text-decoration: underline;
+}
+
+/* Il contorno rende visibile anche il collegamento o il pulsante selezionato da tastiera. */
+.text-link:focus-visible,
+.submit-button:focus-visible,
+.remember-option input:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* Il pulsante è largo e acceso, così l'azione principale si riconosce subito. */
+.submit-button {
+  min-height: 50px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  background: linear-gradient(115deg, #e52f49, #bd2446);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+/* Il cambio di colore e il leggero movimento danno un riscontro al passaggio del mouse. */
+.submit-button:hover {
+  background: linear-gradient(115deg, #f2485f, #d83355);
+  transform: translateY(-1px);
+}
+
+/* Il testo di registrazione ha uno spazio proprio, separato dai controlli del modulo. */
+.signup-prompt {
+  margin: 26px 0 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* 9. ADATTAMENTO AGLI SCHERMI PICCOLI
+   Sotto i 480 pixel riduciamo i margini interni e mettiamo le opzioni in colonna,
+   così i testi non si comprimono e il modulo rimane comodo da usare. */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 24px;
+  }
+
+  .form-options {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* 10. ANIMAZIONI DI INGRESSO
+   JavaScript aggiunge animations-enabled solo quando l'utente non ha chiesto
+   di ridurre i movimenti. Le animazioni partono allora in modo ordinato. */
+body.animations-enabled .login-card {
+  animation: card-entrance 850ms cubic-bezier(0.2, 0.75, 0.25, 1) 1250ms both;
+}
+
+/* Le curve partono fuori dallo schermo e raggiungono le posizioni già definite. */
+body.animations-enabled .opera-ring {
+  animation: ring-from-left 1360ms cubic-bezier(0.2, 0.75, 0.25, 1) 1000ms both;
+}
+
+/* La seconda curva entra poco dopo la prima per rendere il movimento più naturale. */
+body.animations-enabled .opera-ring-two {
+  animation-delay: 1120ms;
+  animation-name: ring-from-left-inner;
+}
+
+/* La curva in basso a destra entra dal lato destro dello schermo. */
+body.animations-enabled .opera-ring-three {
+  animation-delay: 1240ms;
+  animation-name: ring-from-right;
+}
+
+/* VIAVI resta al centro per un secondo, poi si rimpicciolisce fino alla posizione in basso. */
+body.animations-enabled .brand-name {
+  animation: brand-entrance 2600ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Questa linea sottile si carica sotto il nome durante l'attesa iniziale. */
+body.animations-enabled .brand-name::after {
+  display: block;
+  width: 0;
+  height: 1px;
+  margin: 8px auto 0;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, #ff5268, #ffffff, #ff5268, transparent);
+  content: "";
+  animation: loading-line 1000ms ease-out both;
+}
+
+/* La scheda entra dal basso con un leggero ingrandimento verso la sua dimensione normale. */
+@keyframes card-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* La prima curva arriva da sinistra; alla fine conserva la sua rotazione originale. */
+@keyframes ring-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100vw) rotate(-28deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(-28deg);
+  }
+}
+
+/* Anche la seconda curva entra da sinistra, mantenendo il proprio angolo. */
+@keyframes ring-from-left-inner {
+  from {
+    opacity: 0;
+    transform: translateX(-100vw) rotate(-34deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(-34deg);
+  }
+}
+
+/* La curva sul lato opposto percorre la stessa distanza partendo da destra. */
+@keyframes ring-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(100vw) rotate(-24deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(-24deg);
+  }
+}
+
+/* La prima parte mantiene VIAVI al centro; dopo un secondo inizia il viaggio verso il basso. */
+@keyframes brand-entrance {
+  0%,
+  38.46% {
+    opacity: 1;
+    transform: translate3d(var(--brand-start-x), var(--brand-start-y), 0) scale(3.2);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* La linea si allunga come un piccolo indicatore di caricamento e si spegne prima del movimento. */
+@keyframes loading-line {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  78% {
+    width: 42px;
+    opacity: 1;
+  }
+
+  100% {
+    width: 42px;
+    opacity: 0;
+  }
+}
+
+/* Se la preferenza cambia mentre la pagina è aperta, interrompiamo i movimenti. */
+@media (prefers-reduced-motion: reduce) {
+  body.animations-enabled .login-card,
+  body.animations-enabled .opera-ring,
+  body.animations-enabled .brand-name {
+    animation: none;
+  }
+}
