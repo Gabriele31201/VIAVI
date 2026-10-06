@@ -1,0 +1,503 @@
+/* Lo sfondo della home riprende le sfumature scure della schermata di accesso. */
+.home-page {
+  background:
+    radial-gradient(ellipse at 13% 20%, rgba(117, 20, 47, 0.34), transparent 36%),
+    radial-gradient(ellipse at 87% 78%, rgba(28, 41, 83, 0.48), transparent 42%),
+    #080b14;
+}
+
+/* Questa superficie occupa tutta la finestra e dà l'effetto del vetro lucido. */
+.home-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(
+      112deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.16) 25%,
+      rgba(255, 255, 255, 0.035) 28%,
+      transparent 36%
+    ),
+    radial-gradient(ellipse at 12% 0%, rgba(255, 255, 255, 0.1), transparent 36%),
+    radial-gradient(ellipse at 88% 100%, rgba(116, 142, 255, 0.07), transparent 38%),
+    rgba(16, 21, 37, 0.12);
+  box-shadow:
+    inset 0 2px 34px rgba(255, 255, 255, 0.12),
+    inset 0 -4px 40px rgba(125, 150, 255, 0.08);
+  -webkit-backdrop-filter: blur(10px) saturate(185%);
+  backdrop-filter: blur(10px) saturate(185%);
+}
+
+/* L'intestazione mette il marchio in alto e lascia liberi i lati dello schermo. */
+.home-header {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 24px;
+}
+
+/* La spaziatura tra le lettere rende il marchio semplice e riconoscibile. */
+.home-brand {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  color: #f0eaf0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.38em;
+  text-indent: 0.38em;
+  text-decoration: none;
+}
+
+/* Il menu resta sobrio: mostra una parola e apre un solo collegamento. */
+.home-menu {
+  position: relative;
+  color: #f0eaf0;
+  font-size: 0.9rem;
+}
+
+/* summary è la linguetta cliccabile nativa del menu a tendina. */
+.home-menu summary {
+  padding: 8px 0 8px 12px;
+  color: #d6d2df;
+  cursor: pointer;
+  list-style: none;
+}
+
+.home-menu summary:focus-visible {
+  outline: 2px solid #ff9ca8;
+  outline-offset: 4px;
+}
+
+.home-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Una piccola freccia indica che il menu può essere aperto. */
+.home-menu summary::after {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 0 3px 10px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  content: "";
+  transform: rotate(45deg);
+  transition: transform 160ms ease;
+}
+
+.home-menu[open] summary::after {
+  transform: rotate(225deg);
+}
+
+/* Il pannello compare sotto la linguetta e usa un fondo scuro semitrasparente. */
+.home-menu-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 2;
+  min-width: 160px;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(12, 16, 29, 0.88);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* Il link occupa la riga del menu intera e resta ben visibile al passaggio del mouse. */
+.home-menu-panel a {
+  display: block;
+  padding: 9px 11px;
+  border-radius: 6px;
+  color: #f0eaf0;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.home-menu-panel a:hover,
+.home-menu-panel a:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.home-menu-panel a:focus-visible {
+  outline: 2px solid #ff9ca8;
+  outline-offset: 1px;
+}
+
+/* Il benvenuto e i riquadri si dispongono al centro dello spazio disponibile. */
+.home-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: calc(100vh - 100px);
+  align-content: center;
+  gap: 42px;
+  padding: 24px clamp(20px, 3vw, 48px);
+  text-align: center;
+}
+
+/* Il saluto è più piccolo dei riquadri e si adatta alla larghezza dello schermo. */
+.home-content h1 {
+  margin: 0;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  line-height: 1.15;
+}
+
+/* Il nome utente riprende il rosso delle curve decorative dello sfondo. */
+.home-user-name {
+  color: #ff3148;
+}
+
+/* I tre riquadri condividono lo spazio e possono allargarsi quando sono selezionati. */
+.home-boxes {
+  display: grid;
+  width: min(100%, 1400px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+  justify-self: center;
+  transition: grid-template-columns 2000ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* I pulsanti sono riquadri vuoti, pronti a ospitare i contenuti futuri. */
+.home-box {
+  display: grid;
+  min-width: 0;
+  min-height: 380px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.09), transparent 42%),
+    rgba(255, 255, 255, 0.025);
+  box-shadow:
+    0 20px 55px rgba(0, 0, 0, 0.2),
+    inset 0 1px 18px rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #f0eaf0;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 2000ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 900ms ease,
+    border-color 900ms ease,
+    box-shadow 900ms ease;
+}
+
+/* Le etichette seguono la tipografia del marchio e si allineano sul bordo destro. */
+.home-box span {
+  align-self: center;
+  justify-self: end;
+  font-family: inherit;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+/* Il riquadro attivo si illumina e si solleva leggermente. */
+.home-box:hover,
+.home-box:focus-visible {
+  z-index: 1;
+  border-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.3),
+    inset 0 1px 24px rgba(255, 255, 255, 0.12);
+  outline: none;
+  transform: translateY(-4px);
+}
+
+/* Mostriamo un contorno chiaro quando il riquadro è raggiunto con la tastiera. */
+.home-box:focus-visible {
+  outline: 2px solid #ff9ca8;
+  outline-offset: 4px;
+}
+
+/* Su desktop il riquadro attivo guadagna spazio e gli altri due si restringono. */
+@media (min-width: 761px) {
+  .home-boxes:has(.home-box:nth-child(1):is(:hover, :focus-visible)) {
+    grid-template-columns: 1.12fr 0.94fr 0.94fr;
+  }
+
+  .home-boxes:has(.home-box:nth-child(2):is(:hover, :focus-visible)) {
+    grid-template-columns: 0.94fr 1.12fr 0.94fr;
+  }
+
+  .home-boxes:has(.home-box:nth-child(3):is(:hover, :focus-visible)) {
+    grid-template-columns: 0.94fr 0.94fr 1.12fr;
+  }
+}
+
+/* Saluto, riquadri e menu iniziano a svanire dopo che il marchio è partito. */
+@keyframes home-return-content-fade {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* Quando un riquadro è attivo, gli altri si rimpiccioliscono leggermente. */
+.home-boxes:has(.home-box:hover) .home-box:not(:hover),
+.home-boxes:has(.home-box:focus-visible) .home-box:not(:focus-visible) {
+  transform: scale(0.985);
+}
+
+/* Su tablet i riquadri si dispongono in due colonne per non diventare troppo stretti. */
+@media (max-width: 760px) {
+  .home-boxes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    transition: grid-template-columns 2000ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .home-box:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .home-box {
+    min-height: 300px;
+  }
+
+  .home-boxes:has(.home-box:hover) .home-box:not(:hover),
+  .home-boxes:has(.home-box:focus-visible) .home-box:not(:focus-visible) {
+    transform: scale(0.97);
+  }
+}
+
+/* Su telefono i riquadri si impilano e mantengono una dimensione comoda. */
+@media (max-width: 480px) {
+  .home-content {
+    gap: 26px;
+    padding: 24px;
+  }
+
+  .home-boxes {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .home-boxes:has(.home-box:hover) .home-box:not(:hover),
+  .home-boxes:has(.home-box:focus-visible) .home-box:not(:focus-visible) {
+    transform: scale(0.97);
+  }
+
+  .home-box,
+  .home-box:last-child {
+    min-height: 260px;
+    grid-column: auto;
+  }
+}
+
+/* 2. ANIMAZIONI DELLA HOME
+   La scritta resta al centro per un secondo e poi si rimpicciolisce verso l'alto,
+   con la stessa durata e la stessa linea di caricamento usate nella schermata login. */
+body.home-animations-enabled .home-brand {
+  animation: home-brand-arrival 2600ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Dal login il marchio continua dal centro e completa il viaggio verso l'intestazione. */
+body.home-animations-enabled.home-from-login .home-brand {
+  animation: home-brand-continue 1300ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+body.home-animations-enabled .home-content {
+  animation: home-content-arrival 900ms cubic-bezier(0.2, 0.75, 0.25, 1) 1250ms both;
+}
+
+/* La home comincia a mostrarsi mentre VIAVI sta salendo dal centro. */
+body.home-animations-enabled.home-from-login .home-content {
+  animation-delay: 250ms;
+}
+
+/* La linea sottile sotto VIAVI si carica mentre il marchio è fermo al centro. */
+body.home-animations-enabled .home-brand::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  margin-top: 8px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, #ff5268, #ffffff, #ff5268, transparent);
+  content: "";
+  animation: home-loading-line 1000ms ease-out both;
+  transform: translateX(-50%);
+}
+
+/* La linea è già stata mostrata durante il caricamento dal login: non la ripetiamo. */
+body.home-animations-enabled.home-from-login .home-brand::after {
+  animation: none;
+}
+
+/* Durante il ritorno al login la linea accompagna il marchio fino al centro. */
+body.home-returning-to-login .home-brand::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 42px;
+  height: 1px;
+  margin-top: 8px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, #ff5268, #ffffff, #ff5268, transparent);
+  content: "";
+  animation: home-loading-line 1000ms ease-out both;
+  transform: translateX(-50%);
+}
+
+/* Nel passaggio al login scompaiono menu e contenuti, lasciando sfondo e marchio. */
+body.home-returning-to-login .home-menu,
+body.home-returning-to-login .home-content {
+  pointer-events: none;
+  animation: home-return-content-fade 650ms ease 650ms both;
+}
+
+/* Le curve iniziano il loro ingresso quando il marchio lascia il centro. */
+body.home-animations-enabled .opera-ring-one {
+  animation: home-ring-from-left 1360ms cubic-bezier(0.2, 0.75, 0.25, 1) 1000ms both;
+}
+
+body.home-animations-enabled .opera-ring-two {
+  animation: home-ring-from-left-inner 1360ms cubic-bezier(0.2, 0.75, 0.25, 1) 1120ms both;
+}
+
+body.home-animations-enabled .opera-ring-three {
+  animation: home-ring-from-right 1360ms cubic-bezier(0.2, 0.75, 0.25, 1) 1240ms both;
+}
+
+/* Al ritorno dal login le curve entrano assieme alla prosecuzione del marchio. */
+body.home-animations-enabled.home-from-login .opera-ring-one {
+  animation-delay: 0ms;
+}
+
+body.home-animations-enabled.home-from-login .opera-ring-two {
+  animation-delay: 120ms;
+}
+
+body.home-animations-enabled.home-from-login .opera-ring-three {
+  animation-delay: 240ms;
+}
+
+/* Il marchio parte dal centro, resta fermo un secondo e poi sale verso l'intestazione. */
+@keyframes home-brand-arrival {
+  0%,
+  38.46% {
+    opacity: 1;
+    transform: translate3d(var(--home-brand-start-x), var(--home-brand-start-y), 0) scale(3.2);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Quando il login ha già animato il marchio fino al centro, lo facciamo salire subito. */
+@keyframes home-brand-continue {
+  from {
+    opacity: 1;
+    transform: translate3d(var(--home-brand-start-x), var(--home-brand-start-y), 0) scale(3.2);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* La linea si allunga sotto il marchio e si spegne prima che inizi il movimento. */
+@keyframes home-loading-line {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  78% {
+    width: 42px;
+    opacity: 1;
+  }
+
+  100% {
+    width: 42px;
+    opacity: 0;
+  }
+}
+
+/* Il saluto e i tre riquadri appaiono mentre il marchio sale verso l'alto. */
+@keyframes home-content-arrival {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Le curve arrivano dai due lati e terminano con le rotazioni usate nel login. */
+@keyframes home-ring-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100vw) rotate(-28deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(-28deg);
+  }
+}
+
+@keyframes home-ring-from-left-inner {
+  from {
+    opacity: 0;
+    transform: translateX(-100vw) rotate(-34deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(-34deg);
+  }
+}
+
+@keyframes home-ring-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(100vw) rotate(-24deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(-24deg);
+  }
+}
+
+/* Con la preferenza di movimento ridotto mostriamo subito la home senza animazioni. */
+@media (prefers-reduced-motion: reduce) {
+  body.home-animations-enabled .home-brand,
+  body.home-animations-enabled .home-content,
+  body.home-animations-enabled .opera-ring {
+    animation: none;
+  }
+
+  .home-boxes,
+  .home-box {
+    transition: none;
+  }
+}

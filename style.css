@@ -283,6 +283,18 @@ body {
   transform: translateY(-1px);
 }
 
+/* Il messaggio di controllo appare solo se manca l'email o la password. */
+.form-feedback {
+  min-height: 0;
+  margin: -10px 0 0;
+  color: #ff9aa5;
+  font-size: 0.85rem;
+}
+
+.form-feedback:empty {
+  display: none;
+}
+
 /* Il testo di registrazione ha uno spazio proprio, separato dai controlli del modulo. */
 .signup-prompt {
   margin: 26px 0 0;
@@ -344,6 +356,61 @@ body.animations-enabled .brand-name::after {
   background: linear-gradient(90deg, transparent, #ff5268, #ffffff, #ff5268, transparent);
   content: "";
   animation: loading-line 1000ms ease-out both;
+}
+
+/* La linea di caricamento è già apparsa durante il viaggio dalla home. */
+body.animations-enabled.login-from-home .brand-name::after {
+  animation: none;
+}
+
+/* Durante il passaggio alla home la scheda svanisce per lasciare spazio al marchio. */
+body.login-transition .login-card {
+  pointer-events: none;
+  animation: login-card-exit 350ms ease-out both;
+}
+
+/* La linea compare sotto VIAVI quando il nome sta arrivando al centro. */
+body.login-transition .brand-name::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 42px;
+  height: 1px;
+  margin-top: 8px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, #ff5268, #ffffff, #ff5268, transparent);
+  content: "";
+  animation: login-loading-line 650ms ease-out 450ms both;
+  transform: translateX(-50%);
+}
+
+/* Usiamo una sequenza distinta per riavviare la linea quando si preme Accedi. */
+@keyframes login-loading-line {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    width: 42px;
+    opacity: 1;
+  }
+
+  100% {
+    width: 42px;
+    opacity: 0;
+  }
+}
+
+@keyframes login-card-exit {
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
 }
 
 /* La scheda entra dal basso con un leggero ingrandimento verso la sua dimensione normale. */

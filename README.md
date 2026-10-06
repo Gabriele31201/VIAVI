@@ -1,17 +1,20 @@
 # Pagina di accesso
 
-Ciao! In questo progetto realizziamo una schermata di accesso usando solo **HTML** e **CSS**.
-L'obiettivo è capire come si costruisce una pagina web: prima organizziamo i contenuti,
-poi usiamo gli stili per controllarne l'aspetto.
+Ciao! In questo progetto realizziamo una schermata di accesso e una home usando **HTML**,
+**CSS** e un po' di **JavaScript**. L'HTML organizza i contenuti, il CSS ne cura l'aspetto
+e JavaScript controlla i campi del login e avvia alcune animazioni.
 
 ## File del progetto
 
-- `index.html` contiene la struttura e i testi della pagina.
-- `style.css` contiene colori, disposizione, forme decorative, animazioni e adattamento agli schermi piccoli.
-- `script.js` decide se attivare le animazioni, rispettando la preferenza di accessibilità del dispositivo.
+- `index.html` contiene il modulo della pagina di accesso.
+- `style.css` contiene colori, disposizione, forme decorative, animazioni e adattamento agli schermi piccoli del login.
+- `script.js` controlla che email e password non siano vuote e decide se attivare le animazioni.
+- `home.html` contiene la pagina iniziale con il saluto personalizzato, i riquadri Tasse, Entrate e Cedolini e un menu minimale.
+- `home.css` applica alla home lo sfondo lucido, il layout e le animazioni coordinate col login.
+- `home.js` attiva le animazioni della home rispettando la preferenza per ridurre i movimenti.
 
-I tre file devono rimanere nella stessa cartella: `index.html` carica il foglio di stile
-`style.css` e lo script `script.js`.
+Tutti i file devono rimanere nella stessa cartella. La pagina `index.html` usa `style.css`
+e `script.js`; `home.html` usa `style.css`, `home.css` e `home.js`.
 
 ## Come aprire la pagina
 
@@ -31,9 +34,10 @@ L'HTML descrive **che cosa** si trova nella pagina:
 - `label` descrive ciascun campo e, grazie a `for` e `id`, è collegata al proprio input.
 - `button` rappresenta l'azione principale.
 
-Gli attributi `required` chiedono al browser di non inviare i campi vuoti, mentre `type="email"`
-controlla che l'indirizzo abbia una forma plausibile. Sono controlli di base del browser, non
-una verifica dell'identità.
+JavaScript controlla che il campo email e quello della password contengano almeno un carattere
+diverso da uno spazio. Se uno dei due è vuoto, mostra un messaggio e non cambia pagina.
+Quando entrambi sono compilati, il browser apre `home.html`. Per rispettare questa regola
+semplice, il modulo non controlla se l'indirizzo email è scritto in un formato valido.
 
 Le curve decorative sono marcate con `aria-hidden="true"` perché non comunicano informazioni
 necessarie: in questo modo le tecnologie assistive possono ignorarle.
@@ -73,11 +77,31 @@ secondo, mentre una linea sottile sotto di esso si allunga e poi si spegne. A qu
 VIAVI si rimpicciolisce fino alla posizione finale; durante il tragitto la scheda di accesso
 compare e le curve entrano dai lati dello schermo.
 
+Quando si preme Accedi con entrambi i campi compilati, il marchio torna al centro mentre
+la scheda svanisce e una linea di caricamento appare sotto VIAVI. La home riprende poi il
+marchio da quel punto e lo anima verso l'alto, senza ripetere la pausa o la linea.
+Quando si torna dalla home al login, VIAVI parte invece dalla posizione in alto,
+raggiunge il centro con la linea di caricamento e prosegue verso la posizione finale
+in basso con un movimento di 2,2 secondi. Durante il passaggio dalla home, saluto,
+riquadri e menu svaniscono, lasciando visibili lo sfondo e il marchio.
+
 JavaScript decide **quando** avviare l'effetto, mentre CSS descrive **come** si svolge
 l'animazione. Se è attiva la preferenza per ridurre i movimenti, nome e scheda restano
 subito nelle loro posizioni finali, senza animarsi.
 
-### 4. Accessibilità e schermi piccoli
+### 4. La pagina iniziale
+
+La home mette il marchio VIAVI in alto e usa un fondo scuro con riflessi trasparenti simili
+alla scheda di accesso. Anche qui il marchio parte grande dal centro, resta fermo un secondo
+con una linea di caricamento e poi si rimpicciolisce verso l'alto. Nel frattempo entrano le
+curve e appare il saluto "Benvenuto, utente" sopra i riquadri Cedolini, Entrate e Tasse,
+con le etichette allineate a destra e una tipografia coordinata al marchio.
+Passando con il mouse o selezionandone uno con la tastiera, il riquadro attivo si allarga e
+gli altri si restringono con una transizione più lenta e morbida. Il menu in alto a destra
+contiene il collegamento per tornare al login. Se è attiva la preferenza per ridurre i
+movimenti, gli elementi appaiono subito nelle loro posizioni finali.
+
+### 5. Accessibilità e schermi piccoli
 
 I campi hanno etichette visibili e gli elementi interattivi mostrano un contorno quando
 si naviga con la tastiera. La regola `@media` modifica spaziature e disposizione su schermi
@@ -85,8 +109,8 @@ stretti, così il modulo rimane leggibile anche sul telefono.
 
 ## Limiti di questa versione
 
-Questa è una pagina dimostrativa: **non effettua un accesso reale** e non salva né invia
-credenziali a un servizio. Il pulsante usa un modulo HTML, ma non c'è un server collegato
-che controlli email e password. Anche i collegamenti per recupero password e registrazione
-sono segnaposto: per renderli funzionanti servono altre pagine e, per l'autenticazione,
+Queste pagine sono una dimostrazione: **non effettuano un accesso reale** e non salvano né
+inviano credenziali a un servizio. JavaScript controlla soltanto che entrambi i campi non
+siano vuoti; non verifica chi sta accedendo. Anche i collegamenti per recupero password e
+registrazione sono segnaposto. Per autenticare gli utenti e proteggere davvero la home serve
 un backend sicuro.

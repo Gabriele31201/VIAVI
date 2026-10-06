@@ -40,14 +40,14 @@
         <p class="subtitle">Inserisci i tuoi dati per continuare.</p>
       </header>
 
-      <!-- form raccoglie i dati; per ora non esiste un server che possa verificare l'accesso. -->
-      <form class="login-form" action="#" method="post">
+      <!-- form raccoglie i dati; novalidate lascia a JavaScript il controllo richiesto dal progetto. -->
+      <form class="login-form" action="#" method="post" novalidate>
         <!-- Ogni campo è dentro un div, così etichetta e input restano allineati. -->
         <div class="form-field">
           <!-- for e id collegano l'etichetta al campo anche quando si clicca sul testo. -->
           <label for="email">Indirizzo email</label>
 
-          <!-- type=email permette al browser di controllare la forma dell'indirizzo. -->
+          <!-- type=email identifica il dato come indirizzo e propone la tastiera adatta. -->
           <input
             id="email"
             name="email"
@@ -87,6 +87,9 @@
 
         <!-- type=submit indica che questo pulsante invia il modulo al browser. -->
         <button class="submit-button" type="submit">Accedi</button>
+
+        <!-- Questo messaggio spiega come correggere il modulo se manca un campo. -->
+        <p class="form-feedback" id="login-feedback" role="alert" aria-live="polite"></p>
       </form>
 
       <!-- In fondo offriamo un'alternativa a chi non ha ancora un account. -->

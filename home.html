@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <!-- UTF-8 permette di mostrare correttamente tutti i caratteri italiani. -->
+  <meta charset="UTF-8">
+
+  <!-- La pagina si adatta anche agli schermi piccoli, come quelli dei telefoni. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Il titolo identifica la pagina iniziale del sito nella scheda del browser. -->
+  <title>Home | VIAVI</title>
+
+  <!-- Riutilizziamo gli stili condivisi e aggiungiamo quelli specifici della home. -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="home.css">
+
+  <!-- Lo script abilita l'ingresso animato della home solo se il movimento è consentito. -->
+  <script src="home.js" defer></script>
+</head>
+<body class="home-page">
+  <!-- Questa superficie copre la pagina e riprende il vetro lucido della schermata login. -->
+  <div class="home-shell">
+    <!-- Le curve sono decorative e non devono essere lette dalle tecnologie assistive. -->
+    <div class="opera-art" aria-hidden="true">
+      <span class="opera-ring opera-ring-one"></span>
+      <span class="opera-ring opera-ring-two"></span>
+      <span class="opera-ring opera-ring-three"></span>
+    </div>
+
+    <!-- L'intestazione tiene il marchio a sinistra e le opzioni all'angolo opposto. -->
+    <header class="home-header">
+      <!-- Il marchio collega alla pagina login e si anima dal centro verso l'alto. -->
+      <a class="home-brand" href="index.html" aria-label="Torna al login">VIAVI</a>
+
+      <!-- details crea un menu apribile senza JavaScript aggiuntivo. -->
+      <details class="home-menu">
+        <summary>Menu</summary>
+        <nav class="home-menu-panel" aria-label="Menu principale">
+          <a href="index.html">Torna al login</a>
+        </nav>
+      </details>
+    </header>
+
+    <!-- Il titolo e i tre riquadri formano il contenuto essenziale della home. -->
+    <main class="home-content">
+      <h1>Benvenuto, <span class="home-user-name">utente</span></h1>
+
+      <!-- L'ordine da sinistra a destra è Cedolini, Entrate e Tasse. -->
+      <section class="home-boxes" aria-label="Spazi per i contenuti della home">
+        <button class="home-box" type="button">
+          <span>Cedolini</span>
+        </button>
+        <button class="home-box" type="button">
+          <span>Entrate</span>
+        </button>
+        <button class="home-box" type="button">
+          <span>Tasse</span>
+        </button>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
