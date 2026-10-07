@@ -1,116 +1,222 @@
-# Pagina di accesso
+# VIAVI — guida passo passo
 
-Ciao! In questo progetto realizziamo una schermata di accesso e una home usando **HTML**,
-**CSS** e un po' di **JavaScript**. L'HTML organizza i contenuti, il CSS ne cura l'aspetto
-e JavaScript controlla i campi del login e avvia alcune animazioni.
+Questa guida racconta in modo semplice come è fatta la demo VIAVI, come avviarla
+e dove trovare le parti principali del codice. Puoi seguirla dall'inizio alla fine
+anche se stai imparando React e lo sviluppo web.
 
-## File del progetto
+## 1. Che cosa fa l'app
 
-- `index.html` contiene il modulo della pagina di accesso.
-- `style.css` contiene colori, disposizione, forme decorative, animazioni e adattamento agli schermi piccoli del login.
-- `script.js` controlla che email e password non siano vuote e decide se attivare le animazioni.
-- `home.html` contiene la pagina iniziale con il saluto personalizzato, i riquadri Tasse, Entrate e Cedolini e un menu minimale.
-- `home.css` applica alla home lo sfondo lucido, il layout e le animazioni coordinate col login.
-- `home.js` attiva le animazioni della home rispettando la preferenza per ridurre i movimenti.
+VIAVI è una piccola applicazione web composta da due schermate:
 
-Tutti i file devono rimanere nella stessa cartella. La pagina `index.html` usa `style.css`
-e `script.js`; `home.html` usa `style.css`, `home.css` e `home.js`.
+1. **Login**: mostra i campi per email e password, controlla che non siano vuoti
+   e mostra un messaggio se manca un dato.
+2. **Home**: mostra un saluto, un menu e tre riquadri chiamati Cedolini, Entrate
+   e Tasse.
 
-## Come aprire la pagina
+Le due schermate sono collegate da transizioni animate. Il marchio VIAVI si sposta
+tra il centro della pagina e la barra superiore della home, mentre le linee curve
+decorative fanno da sfondo.
 
-Apri la cartella `prova sito` e fai doppio clic su `index.html`. Il browser mostrerà la pagina
-senza bisogno di installare programmi o avviare un server.
+> **Importante:** questa è una demo grafica, non un vero sistema di autenticazione.
+> Per proseguire basta inserire un qualsiasi testo non vuoto in entrambi i campi.
+> Email e password non vengono inviate a un server né salvate. I link
+> «Password dimenticata?» e «Registrati» sono segnaposto.
 
-## Come è costruita la pagina
+## 2. Tecnologie usate
 
-### 1. La struttura HTML
+- **HTML** definisce il punto in cui viene mostrata l'app.
+- **CSS** definisce colori, disposizione, adattamento agli schermi e animazioni.
+- **JavaScript** contiene la logica che reagisce alle azioni dell'utente.
+- **React** costruisce le schermate come componenti e aggiorna i campi quando
+  l'utente scrive.
+- **React Router** permette di passare da una schermata all'altra senza
+  ricaricare tutta la pagina.
+- **Vite** avvia il progetto durante lo sviluppo e prepara i file finali per la
+  pubblicazione.
 
-L'HTML descrive **che cosa** si trova nella pagina:
+## 3. Preparare e avviare il progetto
 
-- `head` contiene informazioni per il browser, come il titolo e la codifica dei caratteri.
-- `main` racchiude il contenuto principale.
-- `section` contiene la scheda di accesso.
-- `form` raccoglie i dati scritti dall'utente.
-- `label` descrive ciascun campo e, grazie a `for` e `id`, è collegata al proprio input.
-- `button` rappresenta l'azione principale.
+### Requisiti
 
-JavaScript controlla che il campo email e quello della password contengano almeno un carattere
-diverso da uno spazio. Se uno dei due è vuoto, mostra un messaggio e non cambia pagina.
-Quando entrambi sono compilati, il browser apre `home.html`. Per rispettare questa regola
-semplice, il modulo non controlla se l'indirizzo email è scritto in un formato valido.
+Installa [Node.js](https://nodejs.org/), che include npm. npm serve a installare
+le librerie e a lanciare i comandi del progetto.
 
-Le curve decorative sono marcate con `aria-hidden="true"` perché non comunicano informazioni
-necessarie: in questo modo le tecnologie assistive possono ignorarle.
+Apri PowerShell nella cartella del progetto. Su Windows, se PowerShell blocca lo
+script `npm.ps1`, usa `npm.cmd` come negli esempi seguenti.
 
-### 2. La presentazione CSS
+### Installare le librerie
 
-Il CSS descrive **come** appaiono gli elementi. All'inizio di `style.css` troviamo alcune
-variabili con i colori principali. Le regole successive sono divise in sezioni numerate:
+La prima volta esegui:
 
-1. colori del progetto;
-2. regole di base;
-3. impaginazione;
-4. curve decorative;
-5. scheda effetto vetro;
-6. titoli e testi;
-7. campi del modulo;
-8. opzioni, collegamenti e pulsante;
-9. adattamento agli schermi piccoli.
+```powershell
+npm.cmd install
+```
 
-Il fondo scuro è composto da un colore e da sfumature. Gli anelli sono forme ovali create
-con bordi arrotondati, ruotate e posizionate in parte fuori dallo schermo.
+Questo comando legge `package.json` e scarica le librerie necessarie nella cartella
+`node_modules`. Il file `package-lock.json` registra le versioni risolte, così le
+installazioni successive sono più coerenti.
 
-La scheda ricorda un vetro lucido perché è quasi trasparente, sfoca lo sfondo dietro di sé
-con `backdrop-filter` e usa una fascia diagonale luminosa, sfumature e ombre interne per
-simulare dei riflessi. Non ha un bordo: la sua forma si distingue grazie a luce, sfocatura
-e ombra, mentre il testo resta nitido perché la trasparenza si applica solo allo sfondo.
+### Avviare l'app mentre la stai modificando
 
-Il nome **VIAVI** è posizionato in basso con lettere spaziate e un colore tenue, scelto per
-armonizzarsi con lo sfondo scuro restando facile da leggere.
+```powershell
+npm.cmd run dev
+```
 
-### 3. Le animazioni JavaScript
+Vite mostra nel terminale un indirizzo locale, di solito
+`http://localhost:5173`. Aprilo nel browser: quando salvi una modifica, Vite
+aggiorna la pagina.
 
-Quando la pagina si apre, `script.js` controlla se il dispositivo è impostato per ridurre
-i movimenti. Se le animazioni sono consentite, calcola la distanza tra la scritta VIAVI
-in basso e il centro dello schermo. Il nome appare grande al centro e resta fermo per un
-secondo, mentre una linea sottile sotto di esso si allunga e poi si spegne. A quel punto
-VIAVI si rimpicciolisce fino alla posizione finale; durante il tragitto la scheda di accesso
-compare e le curve entrano dai lati dello schermo.
+### Creare e provare la versione finale
 
-Quando si preme Accedi con entrambi i campi compilati, il marchio torna al centro mentre
-la scheda svanisce e una linea di caricamento appare sotto VIAVI. La home riprende poi il
-marchio da quel punto e lo anima verso l'alto, senza ripetere la pausa o la linea.
-Quando si torna dalla home al login, VIAVI parte invece dalla posizione in alto,
-raggiunge il centro con la linea di caricamento e prosegue verso la posizione finale
-in basso con un movimento di 2,2 secondi. Durante il passaggio dalla home, saluto,
-riquadri e menu svaniscono, lasciando visibili lo sfondo e il marchio.
+```powershell
+npm.cmd run build
+npm.cmd run preview
+```
 
-JavaScript decide **quando** avviare l'effetto, mentre CSS descrive **come** si svolge
-l'animazione. Se è attiva la preferenza per ridurre i movimenti, nome e scheda restano
-subito nelle loro posizioni finali, senza animarsi.
+`build` controlla e prepara i file ottimizzati nella cartella `dist`.
+`preview` avvia un piccolo server locale per provare proprio quei file.
 
-### 4. La pagina iniziale
+## 4. Come sono organizzati i file
 
-La home mette il marchio VIAVI in alto e usa un fondo scuro con riflessi trasparenti simili
-alla scheda di accesso. Anche qui il marchio parte grande dal centro, resta fermo un secondo
-con una linea di caricamento e poi si rimpicciolisce verso l'alto. Nel frattempo entrano le
-curve e appare il saluto "Benvenuto, utente" sopra i riquadri Cedolini, Entrate e Tasse,
-con le etichette allineate a destra e una tipografia coordinata al marchio.
-Passando con il mouse o selezionandone uno con la tastiera, il riquadro attivo si allarga e
-gli altri si restringono con una transizione più lenta e morbida. Il menu in alto a destra
-contiene il collegamento per tornare al login. Se è attiva la preferenza per ridurre i
-movimenti, gli elementi appaiono subito nelle loro posizioni finali.
+```text
+viavi-login/
+├── index.html       punto di ingresso HTML
+├── package.json     librerie e comandi del progetto
+├── vite.config.js   impostazioni di Vite
+├── src/
+│   ├── main.jsx     avvio di React e configurazione della navigazione
+│   └── App.jsx      schermate, controlli e passaggi tra login e home
+├── style.css        stile condiviso e schermata di login
+└── home.css         stile della home e delle sue animazioni
+```
 
-### 5. Accessibilità e schermi piccoli
+Le cartelle `node_modules` e `dist` sono create dai comandi npm: non sono il
+codice sorgente da modificare a mano.
 
-I campi hanno etichette visibili e gli elementi interattivi mostrano un contorno quando
-si naviga con la tastiera. La regola `@media` modifica spaziature e disposizione su schermi
-stretti, così il modulo rimane leggibile anche sul telefono.
+## 5. Il percorso di avvio, dal browser a React
 
-## Limiti di questa versione
+1. Il browser apre `index.html`. Al suo interno c'è il contenitore vuoto
+   `<div id="root"></div>`, che farà da spazio per l'app.
+2. La stessa pagina carica `src/main.jsx`.
+3. `main.jsx` crea l'app React dentro `root`, attiva `HashRouter` e importa i due
+   fogli di stile.
+4. `HashRouter` legge il percorso dopo il simbolo `#` nell'indirizzo. In questo
+   modo le pagine sono raggiungibili anche su hosting statici, senza configurare
+   un server per gestire gli indirizzi.
+5. `App.jsx` decide quale schermata mostrare: `#/` apre il login e `#/home` apre
+   la home.
 
-Queste pagine sono una dimostrazione: **non effettuano un accesso reale** e non salvano né
-inviano credenziali a un servizio. JavaScript controlla soltanto che entrambi i campi non
-siano vuoti; non verifica chi sta accedendo. Anche i collegamenti per recupero password e
-registrazione sono segnaposto. Per autenticare gli utenti e proteggere davvero la home serve
-un backend sicuro.
+## 6. Come funziona il login
+
+La schermata di accesso è il componente `LoginPage` in `src/App.jsx`.
+
+### I valori dei campi
+
+React conserva email e password nello **stato** del componente. In pratica lo
+stato è il dato che React ricorda e usa per aggiornare la schermata. Quando
+l'utente scrive, `setEmail` o `setPassword` aggiornano il valore corrispondente.
+
+Anche il messaggio di errore, i campi da segnalare e lo stato del pulsante sono
+memorizzati nello stato React. `useRef` conserva invece riferimenti agli elementi
+HTML, per esempio per spostare il cursore sul primo campo mancante.
+
+### Quando si preme «Accedi»
+
+La funzione `handleSubmit` segue questi passaggi:
+
+1. Impedisce al browser di ricaricare la pagina.
+2. Rimuove gli spazi iniziali e finali e controlla se i campi sono vuoti.
+3. Se manca un dato, mostra un messaggio e porta il cursore sul campo da
+   completare.
+4. Se i campi contengono testo, avvia la transizione e porta alla home.
+
+Questo controllo verifica soltanto che i campi non siano vuoti: non controlla
+la correttezza dell'email e non verifica la password su un server.
+
+## 7. Come funzionano le schermate e la navigazione
+
+In fondo a `src/App.jsx`, il componente `App` definisce le rotte:
+
+- `/` mostra `LoginPage`;
+- `/home` mostra `HomePage`;
+- qualsiasi altro percorso torna al login.
+
+`useNavigate` permette ai componenti di cambiare schermata con il codice.
+`Link` crea collegamenti interni che funzionano con React Router senza ricaricare
+il documento.
+
+La pagina ricorda temporaneamente da quale schermata arriva usando due piccoli
+segnali in `sessionStorage`. Non sono credenziali: servono solo a scegliere
+l'animazione corretta dopo il cambio di rotta. Appena la schermata di arrivo li
+legge, li rimuove.
+
+## 8. Come si muove il marchio
+
+La funzione `getCenterOffset` calcola quanti pixel deve spostarsi un elemento per
+raggiungere il centro della finestra. In questo modo l'animazione si adatta alle
+dimensioni dello schermo.
+
+Le schermate usano `useLayoutEffect` per preparare la pagina appena React la
+mostra: aggiornano il titolo del browser, misurano la posizione del marchio e
+aggiungono al `body` le classi CSS necessarie. Quando la schermata viene lasciata,
+le classi vengono tolte.
+
+Il percorso da login a home è questo:
+
+1. La scheda di login si attenua.
+2. Il marchio cresce e raggiunge il centro.
+3. L'app apre la home, che continua il movimento del marchio verso la barra in
+   alto. Le curve sono già presenti sullo sfondo, quindi non ricominciano da capo.
+4. Il saluto e i riquadri compaiono mentre il marchio si sposta.
+
+Per tornare al login, il marchio della home si ingrandisce e va verso il centro.
+Menu e contenuto si attenuano; al termine dell'animazione si apre il login.
+
+### Movimento ridotto
+
+Il browser può comunicare che l'utente preferisce meno animazioni. L'app controlla
+questa preferenza e salta i movimenti quando è attiva. Anche i fogli CSS contengono
+regole `prefers-reduced-motion`, come ulteriore supporto.
+
+## 9. Come leggere i fogli di stile
+
+### `style.css`
+
+Questo file contiene i colori condivisi, lo sfondo del login, la scheda con i
+campi, i collegamenti, il pulsante e le animazioni di ingresso. Le regole
+`@media` riducono spaziature e cambiano la disposizione sui telefoni.
+
+### `home.css`
+
+Questo file contiene la home: intestazione, menu, saluto e riquadri. Su schermi
+larghi i riquadri si dispongono in una riga; su tablet diventano due colonne e su
+telefono una colonna. Il suo sfondo usa le stesse sfumature del login.
+
+Le animazioni CSS sono definite con `@keyframes`. Per esempio, una regola
+`animation` sceglie quale sequenza eseguire, per quanto tempo e con quale curva
+di movimento. Le classi aggiunte da React attivano le sequenze appropriate.
+
+## 10. Accessibilità e piccoli dettagli
+
+- I campi hanno etichette collegate e suggerimenti di compilazione automatica.
+- Gli errori sono annunciati alle tecnologie assistive e i campi mancanti sono
+  segnalati.
+- È possibile individuare con la tastiera i controlli tramite un contorno visibile.
+- Il menu usa elementi HTML nativi `details` e `summary`.
+- Le decorazioni di sfondo sono nascoste alle tecnologie assistive e non
+  intercettano i clic.
+- Le animazioni rispettano la preferenza di movimento ridotto.
+
+## 11. Dove fare le modifiche
+
+- Vuoi cambiare il testo, i campi o il comportamento del login? Apri
+  `src/App.jsx` e cerca `LoginPage`.
+- Vuoi cambiare ciò che appare nella home? Apri `src/App.jsx` e cerca
+  `HomePage`.
+- Vuoi cambiare colori, spaziature o aspetto del login? Modifica `style.css`.
+- Vuoi cambiare home, menu o riquadri? Modifica `home.css`.
+- Vuoi aggiungere una libreria o un comando npm? Modifica `package.json`.
+- Vuoi cambiare il percorso usato per pubblicare il sito? Controlla `vite.config.js`.
+
+Quando hai finito una modifica, puoi ricreare la versione finale con
+`npm.cmd run build`.

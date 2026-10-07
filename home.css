@@ -1,4 +1,6 @@
-/* Lo sfondo della home riprende le sfumature scure della schermata di accesso. */
+/* 1. SFONDO E CONTENITORE
+   La home usa le stesse sfumature di sfondo della schermata di accesso.
+   Il contenitore resta trasparente, così lascia vedere lo sfondo del body. */
 .home-page {
   background:
     radial-gradient(ellipse at 13% 20%, rgba(117, 20, 47, 0.34), transparent 36%),
@@ -6,31 +8,16 @@
     #080b14;
 }
 
-/* Questa superficie occupa tutta la finestra e dà l'effetto del vetro lucido. */
+/* Il contenitore occupa tutta la finestra senza coprire lo sfondo condiviso. */
 .home-shell {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
   isolation: isolate;
-  background:
-    linear-gradient(
-      112deg,
-      transparent 20%,
-      rgba(255, 255, 255, 0.16) 25%,
-      rgba(255, 255, 255, 0.035) 28%,
-      transparent 36%
-    ),
-    radial-gradient(ellipse at 12% 0%, rgba(255, 255, 255, 0.1), transparent 36%),
-    radial-gradient(ellipse at 88% 100%, rgba(116, 142, 255, 0.07), transparent 38%),
-    rgba(16, 21, 37, 0.12);
-  box-shadow:
-    inset 0 2px 34px rgba(255, 255, 255, 0.12),
-    inset 0 -4px 40px rgba(125, 150, 255, 0.08);
-  -webkit-backdrop-filter: blur(10px) saturate(185%);
-  backdrop-filter: blur(10px) saturate(185%);
 }
 
-/* L'intestazione mette il marchio in alto e lascia liberi i lati dello schermo. */
+/* 2. INTESTAZIONE E MENU
+   L'intestazione mette il marchio in alto e lascia liberi i lati dello schermo. */
 .home-header {
   position: relative;
   z-index: 3;
@@ -130,7 +117,8 @@
   outline-offset: 1px;
 }
 
-/* Il benvenuto e i riquadri si dispongono al centro dello spazio disponibile. */
+/* 3. CONTENUTO PRINCIPALE
+   Il benvenuto e i riquadri si dispongono al centro dello spazio disponibile. */
 .home-content {
   position: relative;
   z-index: 1;
@@ -154,14 +142,14 @@
   color: #ff3148;
 }
 
-/* I tre riquadri condividono lo spazio e possono allargarsi quando sono selezionati. */
+/* 4. RIQUADRI E ADATTAMENTO AGLI SCHERMI
+   I tre riquadri condividono lo spazio e possono allargarsi quando sono selezionati. */
 .home-boxes {
   display: grid;
   width: min(100%, 1400px);
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 30px;
   justify-self: center;
-  transition: grid-template-columns 2000ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* I pulsanti sono riquadri vuoti, pronti a ospitare i contenuti futuri. */
@@ -186,7 +174,8 @@
   font-weight: 600;
   cursor: pointer;
   transition:
-    transform 2000ms cubic-bezier(0.4, 0, 0.2, 1),
+    flex-grow 1800ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1800ms cubic-bezier(0.22, 1, 0.36, 1),
     background-color 900ms ease,
     border-color 900ms ease,
     box-shadow 900ms ease;
@@ -222,18 +211,24 @@
   outline-offset: 4px;
 }
 
-/* Su desktop il riquadro attivo guadagna spazio e gli altri due si restringono. */
+/* Su desktop flex-grow anima le larghezze con continuità, senza cambiare le colonne grid. */
 @media (min-width: 761px) {
-  .home-boxes:has(.home-box:nth-child(1):is(:hover, :focus-visible)) {
-    grid-template-columns: 1.12fr 0.94fr 0.94fr;
+  .home-boxes {
+    display: flex;
   }
 
-  .home-boxes:has(.home-box:nth-child(2):is(:hover, :focus-visible)) {
-    grid-template-columns: 0.94fr 1.12fr 0.94fr;
+  .home-box {
+    flex: 1 1 0;
   }
 
-  .home-boxes:has(.home-box:nth-child(3):is(:hover, :focus-visible)) {
-    grid-template-columns: 0.94fr 0.94fr 1.12fr;
+  .home-boxes:has(.home-box:hover) .home-box:hover,
+  .home-boxes:has(.home-box:focus-visible) .home-box:focus-visible {
+    flex-grow: 1.12;
+  }
+
+  .home-boxes:has(.home-box:hover) .home-box:not(:hover),
+  .home-boxes:has(.home-box:focus-visible) .home-box:not(:focus-visible) {
+    flex-grow: 0.94;
   }
 }
 
@@ -259,7 +254,6 @@
   .home-boxes {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
-    transition: grid-template-columns 2000ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .home-box:last-child {
@@ -300,7 +294,7 @@
   }
 }
 
-/* 2. ANIMAZIONI DELLA HOME
+/* 5. ANIMAZIONI DELLA HOME
    La scritta resta al centro per un secondo e poi si rimpicciolisce verso l'alto,
    con la stessa durata e la stessa linea di caricamento usate nella schermata login. */
 body.home-animations-enabled .home-brand {
@@ -376,17 +370,17 @@ body.home-animations-enabled .opera-ring-three {
   animation: home-ring-from-right 1360ms cubic-bezier(0.2, 0.75, 0.25, 1) 1240ms both;
 }
 
-/* Al ritorno dal login le curve entrano assieme alla prosecuzione del marchio. */
+/* Dal login le curve restano ferme: sono già visibili nella schermata di accesso. */
 body.home-animations-enabled.home-from-login .opera-ring-one {
-  animation-delay: 0ms;
+  animation: none;
 }
 
 body.home-animations-enabled.home-from-login .opera-ring-two {
-  animation-delay: 120ms;
+  animation: none;
 }
 
 body.home-animations-enabled.home-from-login .opera-ring-three {
-  animation-delay: 240ms;
+  animation: none;
 }
 
 /* Il marchio parte dal centro, resta fermo un secondo e poi sale verso l'intestazione. */
@@ -488,7 +482,8 @@ body.home-animations-enabled.home-from-login .opera-ring-three {
   }
 }
 
-/* Con la preferenza di movimento ridotto mostriamo subito la home senza animazioni. */
+/* 6. ACCESSIBILITÀ
+   Con la preferenza di movimento ridotto mostriamo subito la home senza animazioni. */
 @media (prefers-reduced-motion: reduce) {
   body.home-animations-enabled .home-brand,
   body.home-animations-enabled .home-content,
